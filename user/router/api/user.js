@@ -5,7 +5,9 @@
  */
 
  const express = require('express');
+ const bcrypt = require('bcrypt');
  const router = express.Router();
+ const UserModel = require("../../models/User");
 
  /**
   * 指定接口地址
@@ -23,6 +25,32 @@
   */
  router.post('/register',(req,res) => {
      console.log(req.body);
+
+     //查询数据库中是否有提交的字段
+     UserModel.findOne({userEmail:req.body.userEmail}).then((user) => {
+         if(user){
+             return res.status(400).json({userEmail:"邮箱巳被注册"});
+         }else{
+             const newUser = new UserModel({
+                 userName: req.body.userName,
+                 userEmail: req.body.userEmail,
+                 userPassword: req.body.userPassword
+             })
+
+            //给 newUser.userPassword 加密,hash 为加密后的密码
+             bcrypt.genSalt(10, function(err, salt) {
+                bcrypt.hash(newUser.userPassword, salt, (err, hash) => {
+                    if(err) throw err;
+                    
+                    newUser.userPassword = hash;
+
+                    //保存到数据库
+                    newUser.save().then(user => res.json(user))
+                                  .catch(err => console.log(err));
+                });
+            });
+         }
+     })
  })
 
  //公开,方便 server.js 等其它地方调用

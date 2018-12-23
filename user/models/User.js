@@ -20,7 +20,7 @@
     },
     userPassword:{
         type:String,
-        required
+        required:true
     },
     userAvatar:{
         type:String
@@ -35,5 +35,6 @@
   * 公开,将该 Schema 发布为 Model
   * mongoose.model() 第一个参数是操作的表，第二个参数是当前实例化的数据格式
   * 意思为 将当前名为 UserSchema 的Schema与存入数据库的表名绑定
+  * users 为数据将要保存的表名
   */
  module.exports = User = mongoose.model("users",UserSchema);
