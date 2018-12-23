@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const app = express();
 
 /**端口
@@ -9,7 +10,7 @@ const app = express();
  */
 const port = process.env.PORT || 3000;
 
-/**
+/**初始化中件间
  * POST配置  给数据库添加数据中间件 bodyParser
  * 新版本的 express 已经分离出了 body-parser 组件，如果在 app 使用过程中，将 bodyParser 配置在路由之后，会导到 POST 请求后，返回为 undefined
  * 因此，bodyParser 的配置要在 接口路由配置前使用
@@ -23,6 +24,7 @@ const port = process.env.PORT || 3000;
  */
 app.use(bodyParser.urlencoded({extended:false}))  
 app.use(bodyParser.json());
+app.use(passport.initialize());
 
 
 /**
@@ -41,6 +43,12 @@ const db = require('./config/key').mongoURI;
  * 当前版本需要在连接数据库时添加 { useNewUrlParser: true }，否则在提交数据时会显示数据库连接超时
  */
 mongoose.connect(db,{ useNewUrlParser: true }).then( () => console.log('数据库连接成功！')).catch((err) => console.log(err));
+
+/** 
+ * 配置 passport，验证 token
+ * 把 passport 这个中间件传给 passport 配置文件，方便调用
+*/
+require("./config/passport")(passport);
 
 /**
  * 配置路由( 路由地址就是当前接口文件的目录地址 ),当请求路由地址时，指向对应的接口方法
