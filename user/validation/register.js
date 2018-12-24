@@ -10,6 +10,7 @@ module.exports = function validatorRegister(data){
     data.userPassword = !isEmpty(data.userPassword) ? data.userPassword : '';
     data.userPassword2 - !isEmpty(data.userPassword2) ? data.userPassword2 : '';
 
+    //Validator true 取反时 !Validator
     if(!Validator.isLength(data.userName,{min:2,max:30})){
         msg.userName = "用户名称不能小于2位不能大于30位";
     }
