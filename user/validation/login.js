@@ -27,7 +27,7 @@ module.exports = function validatorLogin(data){
     }
     
 
-    //通过 isEmpty() 这个方法来验证传过去的这个对象是否存在等
+    //通过 isDataEmpty() 这个方法来验证传过去的这个对象是否存在等
     return {
         msg,
         isValid: isDataEmpty(msg)
