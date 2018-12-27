@@ -8,7 +8,7 @@ const app = express();
  * 为了满足正式环境中的node服务的端口启动需求，有时候需要用到port环境变量，那么这时候就需要在node启动时，设置process.env.PORT。
  * process.env.PORT  意思是读取当前目录下环境变量port的值
  */
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 /**初始化中件间
  * POST配置  给数据库添加数据中间件 bodyParser
@@ -31,6 +31,7 @@ app.use(passport.initialize());
  * 接口文件
  */
 const userApi = require('./router/api/user');
+const profileApi = require('./router/api/profile');
 
 
 /**
@@ -59,7 +60,9 @@ require("./config/passport")(passport);
 app.get('/',(req,res) => {
     res.send('服务启动成功，返回数据为 OK!');
 });
+
 app.use('/api/user',userApi);
+app.use('/api/profile',profileApi);
 
 
 /**
