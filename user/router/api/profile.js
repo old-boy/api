@@ -37,6 +37,83 @@ router.get('/profile',passportUser,(req,res) => {
     }).catch(err => {
         res.json(err)
     })
-})
+});
+
+/** 
+ * POST api/profile
+ * 创建和编辑个人信息
+*/
+router.post('/profile',passportUser,(req,res) =>{
+    const profileEntity = {};
+    const errors = {};
+    profileEntity.user = req.user.id;
+
+    if(req.body.hanle){
+        profileEntity.hanle = req.body.hanle;
+    }
+    if(req.body.company){
+        profileEntity.company = req.body.company;
+    }
+    if(req.body.website){
+        profileEntity.website = req.body.website;
+    }
+    if(req.body.location){
+        profileEntity.location = req.body.location;
+    }
+    if(req.body.status){
+        profileEntity.status = req.body.status;
+    }
+
+    if(req.body.bio){
+        profileEntity.bio = req.body.bio;
+    }
+    if(req.body.githubUserName){
+        profileEntity.githubUserName = req.body.githubUserName;
+    }
+
+    //数组转换,根据逗号转换成数组字符串
+    if(typeof req.body.skills != 'undefined'){
+        profileEntity.skills = req.body.skills.split(',')
+    }
+
+    profileEntity.social = {};
+
+    if(req.body.wechat){
+        profileEntity.social.wechat = req.body.wechat;
+    }
+    if(req.body.qq){
+        profileEntity.social.qq = req.body.qq;
+    }
+    if(req.body.tengxunkt){
+        profileEntity.social.tengxunkt = req.body.tengxunkt;
+    }
+    if(req.body.wangyikt){
+        profileEntity.social.wangyikt = req.body.wangyikt;
+    }
+
+    //查找数据库
+    ProfilesSchema.findOne({user:req.user.id}).then(profile => {
+        if(profile){
+            //用户存在，执行更新方法
+            ProfilesSchema.findByIdAndUpdate({user:req.user.id},{$set:profileEntity},{new:true}).then(profile => {
+                res.json(profile)
+            });
+        }else{
+            //用户不存在，执行创建方法
+            //判断用户是否存在的标志是否存在
+            ProfilesSchema.findOne({hanle:profileEntity.hanle}).then(profile => {
+                if(profile){
+                    errors.hanle = '该用户的个人信息已经存在，请不要再创';
+                    res.status(400).json(errors);
+                }
+
+                new Profile(profileEntity).save().then(profile => {
+                    res.json(profile);
+                })
+            })
+        }
+    })
+});
+
 
 module.exports = router;

@@ -9,7 +9,7 @@ const app = express();
  * process.env.PORT  意思是读取当前目录下环境变量port的值
  */
 // const port = process.env.PORT || 5000;
-const port = 8000;
+const port = 3000;
 
 /**初始化中件间
  * POST配置  给数据库添加数据中间件 bodyParser
