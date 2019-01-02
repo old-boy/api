@@ -34,6 +34,7 @@ app.use(passport.initialize());
 const userApi = require('./router/api/user');
 const profileApi = require('./router/api/profile');
 
+const utecApi = require('./router/api/utec');
 
 /**
  * db 数据库配置文件
@@ -44,7 +45,7 @@ const db = require('./config/key').mongoURI;
  * 连接数据库
  * 当前版本需要在连接数据库时添加 { useNewUrlParser: true }，否则在提交数据时会显示数据库连接超时
  */
-mongoose.connect(db,{ useNewUrlParser: true }).then( () => console.log('数据库连接成功！')).catch((err) => console.log(err));
+mongoose.connect(db,{ useNewUrlParser: true }).then( () => console.log('Database Successful！')).catch((err) => console.log(err));
 
 /** 
  * 配置 passport，验证 token
@@ -60,6 +61,7 @@ require("./config/passport")(passport);
  */
 app.use('/api/user',userApi);
 app.use('/api/profile',profileApi);
+app.use('/api/utec',utecApi);
 
 
 /**
