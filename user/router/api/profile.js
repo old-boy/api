@@ -22,6 +22,7 @@ router.get('/test',(req,res) => {
 /** 
  * GET api/profile/
  * 获取当前登录用户的个人信息
+ * populate（）可以展示关联的表的数据
 */
 router.get("/",passportUser,(req,res) => {
     const errors = {};
@@ -36,6 +37,65 @@ router.get("/",passportUser,(req,res) => {
       res.json(profile);
     }).catch(err => res.status(404).json(err));
 });
+
+/** 
+ * GET api/profile/haddle/:handle
+ * 根据 handle 获取用户的个人信息
+ * populate（）可以展示关联的表的数据
+*/
+router.get("/handle/:handle",(req,res) => {
+    const errors = {};
+    ProfilesSchema.findOne({haddle: req.param.haddle})
+            .populate('user',["name","avatart"])
+            .then(profile => {
+      if(!profile){
+        errors.noprofile = "该用户的信息不存在~!";
+        return res.status(404).json(errors);
+      }
+  
+      res.json(profile);
+    }).catch(err => res.status(404).json(err));
+});
+
+/** 
+ * GET api/profile/user/:user_id
+ * 根据 user_id 获取用户的个人信息
+ * populate（）可以展示关联的表的数据
+*/
+router.get("/user/:user_id",(req,res) => {
+  const errors = {};
+  ProfilesSchema.findOne({user: req.param.user_id})
+          .populate('user',["name","avatart"])
+          .then(profile => {
+    if(!profile){
+      errors.noprofile = "该用户的信息不存在~!";
+      return res.status(404).json(errors);
+    }
+
+    res.json(profile);
+  }).catch(err => res.status(404).json(err));
+});
+
+/** 
+ * GET api/profile/all
+ * 获取所有人的个人信息
+ * populate（）可以展示关联的表的数据
+*/
+router.get("/all",(req,res) => {
+  const errors = {};
+  ProfilesSchema.find()
+          .populate('user',["name","avatart"])
+          .then(profiles => {
+    if(!profiles){
+      errors.noprofile = "没有任何用户信息~!";
+      return res.status(404).json(errors);
+    }
+
+    res.json(profiles);
+  }).catch(err => res.status(404).json(err));
+});
+
+
 
 /** 
  * POST api/profile/
@@ -89,6 +149,11 @@ router.post("/",passportUser,(req,res) => {
         })
       }
     })
-  })
+  });
+
+  /** 
+ * POST api/profile/
+ * 创建和编辑个人信息
+*/
 
 module.exports = router;
