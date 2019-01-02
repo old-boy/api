@@ -8,11 +8,12 @@
   * ref:'users' 就是从 users 这个表中获取关联的数据
   * 
   * handle 会储存登录的用户名
+  * userFriends 关联表返回的对象名称
   */
  const ProfilesSchema = new Schema({
-    userId:{
+    user:{
         type:Schema.Types.ObjectId,
-        ref:'users'
+        ref:"users"//这里要写你指向的数据库表名字
     },
     handle:{
         type:String,
@@ -20,13 +21,13 @@
         max:40
     },
     company:{
-        type:String
+        type:String,
     },
     website:{
-        type:String
+        type:String,
     },
     location:{
-        type:String
+        type:String,
     },
     status:{
         type:String,
@@ -39,10 +40,11 @@
     bio:{
         type:String
     },
-    githubUserName:{
+    githubusername:{
         type:String
     },
-    experience:{
+    experience:[
+    {
         current:{
             type:Boolean,
             default:true
@@ -56,25 +58,31 @@
             required:true
         },
         location:{
-            type:String
+            type:String,
         },
         from:{
             type:String,
-            required:true
+            require:true
         },
         to:{
-            type:String
+            type:String,
         },
-        des:{
-            type:String
-        }
-    },
-    education:{
+        description:{
+            type:String,
+        },
+    }
+    ],
+    education:[
+    {
         current:{
             type:Boolean,
-            default:false
+            default:true
         },
         school:{
+            type:String,
+            required:true
+        },
+        degree:{
             type:String,
             required:true
         },
@@ -84,20 +92,21 @@
         },
         from:{
             type:String,
-            required:true
+            require:true
         },
         to:{
-            type:String
+            type:String,
         },
-        des:{
-            type:String
-        }
-    },
+        description:{
+            type:String,
+        },
+    }
+    ],
     social:{
         wechat:{
             type:String
         },
-        qq:{
+        QQ:{
             type:String
         },
         tengxunkt:{

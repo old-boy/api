@@ -58,10 +58,6 @@ require("./config/passport")(passport);
  * res 在浏览器中返回的 json
  * req 传入的参数
  */
-app.get('/',(req,res) => {
-    res.send('服务启动成功，返回数据为 OK!');
-});
-
 app.use('/api/user',userApi);
 app.use('/api/profile',profileApi);
 
@@ -71,6 +67,6 @@ app.use('/api/profile',profileApi);
  */
 app.listen(port,() => {
     //验证服务是否成功
-    console.log('服务启动成功！')
+    console.log('Service Startup Successful!')
 });
 
