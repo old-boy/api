@@ -7,8 +7,9 @@ const ProfilesSchema = require('../../models/Profiles');
 const UserSchema = require('../../models/User');
 
 const validatorProfile = require('../../validation/profile');
+const validatorExperience = require('../../validation/experience');
 
-const passportUser = passport.authenticate('jwt',{ session: false });
+const passportInfo = passport.authenticate('jwt',{ session: false });
 
 /** 
  * GET api/profile/test
@@ -24,7 +25,7 @@ router.get('/test',(req,res) => {
  * 获取当前登录用户的个人信息
  * populate（）可以展示关联的表的数据
 */
-router.get("/",passportUser,(req,res) => {
+router.get("/",passportInfo,(req,res) => {
     const errors = {};
     ProfilesSchema.findOne({user: req.user.id})
             .populate('user',["name","avatart"])
@@ -95,13 +96,46 @@ router.get("/all",(req,res) => {
   }).catch(err => res.status(404).json(err));
 });
 
+/** 
+ * POST api/profile/experience
+ * 新增或修改个人经历
+ * 所有 post 都会携带 token 去请求，根据登录的当前用户进行操作
+*/
+router.post('/experience',passportInfo,(req,res) => {
+    //1.验证表单
+    const {msg,isValid} = validatorExperience(req.body);
+    if(!isValid){
+      return res.status(400).json(msg);
+    }
+
+    //2.查找数据库，存在则更新，不存在则创建
+    ProfilesSchema.findOne({user:req.user.id})
+                  .then(profile => {
+                    //3.根据Model 数据模型组织数据
+                    const newExperience = {
+                      title:req.body.title,
+                      company:req.body.company,
+                      location:req.body.location,
+                      from:req.body.from,
+                      to:req.body.to,
+                      description:req.body.description
+                    }
+                    
+                    //将得到的这个对象 push 到 profile
+                    profile.experience.unshift(newExperience);
+
+                    //进行存储
+                    profile.save().then(profile => res.json(profile));
+                  })
+                  .catch((err) => res.js)
+});
 
 
 /** 
  * POST api/profile/
  * 创建和编辑个人信息
 */
-router.post("/",passportUser,(req,res) => {
+router.post("/",passportInfo,(req,res) => {
     const {msg,isValid} = validatorProfile(req.body);
   
     // 判断isValid是否通过
