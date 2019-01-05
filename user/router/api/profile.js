@@ -8,6 +8,7 @@ const UserSchema = require('../../models/User');
 
 const validatorProfile = require('../../validation/profile');
 const validatorExperience = require('../../validation/experience');
+const validatorEducation = require('../../validation/education');
 
 const passportInfo = passport.authenticate('jwt',{ session: false });
 
@@ -98,7 +99,7 @@ router.get("/all",(req,res) => {
 
 /** 
  * POST api/profile/experience
- * 新增或修改个人经历
+ * 新增个人经历
  * 所有 post 都会携带 token 去请求，根据登录的当前用户进行操作
 */
 router.post('/experience',passportInfo,(req,res) => {
@@ -111,15 +112,19 @@ router.post('/experience',passportInfo,(req,res) => {
     //2.查找数据库，存在则更新，不存在则创建
     ProfilesSchema.findOne({user:req.user.id})
                   .then(profile => {
+                    console.log('current:   ' + profile.experience[0].current);
+
+                    
+
                     //3.根据Model 数据模型组织数据
                     const newExperience = {
-                      title:req.body.title,
-                      company:req.body.company,
-                      location:req.body.location,
-                      from:req.body.from,
-                      to:req.body.to,
-                      description:req.body.description
-                    }
+                        title:req.body.title,
+                        company:req.body.company,
+                        location:req.body.location,
+                        from:req.body.from,
+                        to:req.body.to,
+                        description:req.body.description
+                    };
                     
                     //将得到的这个对象 push 到 profile
                     profile.experience.unshift(newExperience);
@@ -127,7 +132,39 @@ router.post('/experience',passportInfo,(req,res) => {
                     //进行存储
                     profile.save().then(profile => res.json(profile));
                   })
-                  .catch((err) => res.js)
+                  .catch((err) => res.json(err));
+});
+
+/** 
+ * POST api/profile/education
+ * 新增个人教育
+ * 所有 post 都会携带 token 去请求，根据登录的当前用户进行操作
+*/
+router.post('/education',passportInfo,(req,res) => {
+  const {msg,isValid} = validatorEducation(req.body);
+  if(!isValid){
+    return res.status(400).json(msg);
+  }
+
+  ProfilesSchema.findOne({user:req.user.id})
+                .then(profile => {
+                  console.log('current:   ' + profile.experience[0].current);
+
+                  //3.根据Model 数据模型组织数据
+                  const newEducation = {
+                      current:req.body.current,
+                      school:req.body.school,
+                      degree:req.body.degree,
+                      fieldofstudy:req.body.fieldofstudy,
+                      from:req.body.from,
+                      to:req.body.to,
+                      description:req.body.description
+                  };
+                  
+                  profile.education.unshift(newEducation);
+                  profile.save().then(profile => res.json(profile));
+                })
+                .catch((err) => res.json(err));
 });
 
 

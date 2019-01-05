@@ -5,11 +5,15 @@ module.exports = function validatorExperience(data){
     let msg = {};
 
     //字段不能为空,确保返回的值均为字符串
+    data.current = !isEmpty(data.current) ? data.current : '';
     data.title = !isEmpty(data.title) ? data.title : '';
     data.company = !isEmpty(data.company) ? data.company : '';
     data.from = !isEmpty(data.from) ? data.from : '';
 
     //Validator true 取反时 !Validator
+    if(Validator.isEmpty(data.current)){
+        msg.current = "current不能为空";
+    };
 
     if(Validator.isEmpty(data.title)){
         msg.title = "title不能为空";
