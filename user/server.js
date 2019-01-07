@@ -35,6 +35,7 @@ const userApi = require('./router/api/user');
 const profileApi = require('./router/api/profile');
 
 const utecApi = require('./router/api/utec');
+const anvizApi = require('./router/api/anviz/home');
 
 /**
  * db 数据库配置文件
@@ -62,6 +63,7 @@ require("./config/passport")(passport);
 app.use('/api/user',userApi);
 app.use('/api/profile',profileApi);
 app.use('/api/utec',utecApi);
+app.use('/api/anviz/home',anvizApi);
 
 
 /**
