@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require("passport");
 
-const UtecHomeSchema = require('../../models/UtecHome');
+const UtecHomeSchema = require('../../../models/UtecHome');
 
 const passportSubmit = passport.authenticate('jwt',{ session: false });
 

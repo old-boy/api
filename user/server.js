@@ -9,7 +9,7 @@ const app = express();
  * process.env.PORT  意思是读取当前目录下环境变量port的值
  */
 // const port = process.env.PORT || 5000;
-const port = 5000;
+const port = 4000;
 
 /**初始化中件间
  * POST配置  给数据库添加数据中间件 bodyParser
@@ -34,7 +34,7 @@ app.use(passport.initialize());
 const userApi = require('./router/api/user');
 const profileApi = require('./router/api/profile');
 
-const utecApi = require('./router/api/utec');
+const utecApi = require('./router/api/utec/utec');
 const anvizApi = require('./router/api/anviz/home');
 
 /**

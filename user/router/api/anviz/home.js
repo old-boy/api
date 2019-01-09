@@ -8,6 +8,7 @@ const HomeSchema = require('../../../models/AnvizHome');
 
 const homeBannerValidator = require('../../../validation/anviz/homeBanner');
 const homeProdcutValidator = require('../../../validation/anviz/homeProdcutList');
+const homeCaseValidator = require('../../../validation/anviz/homeCaseValidator');
 
 /** 
  * GET api/anviz/home/test
@@ -74,7 +75,7 @@ router.post("/banner",passportInfo,(req,res) => {
 });
 
 /** 
- * POST api/anviz/home/hot
+ * POST api/anviz/home/prodcut
  * 添加 热销产品
  * 根据 token 
 */
@@ -102,10 +103,41 @@ router.post('/prodcut',passportInfo,(req,res) => {
           if(typeof req.body.prodctFeature !== "undefined"){
             newProdcut.prodctFeature = req.body.prodctFeature.split(",");
           }
-          
+
           console.log('newProdcut:    ' + JSON.stringify(newProdcut));
           profile.prodcutList.unshift(newProdcut);
           console.log('profile:  ' + profile);
+          profile.save().then(profile => res.json(profile));
+        })
+        .catch((err) => res.json(err));
+    });
+
+
+    /** 
+ * POST api/anviz/home/case
+ * 添加 展会，奖牌及产品分类
+ * 根据 token 
+*/
+
+router.post('/case',passportInfo,(req,res) => {
+    const {msg,isValid} = homeCaseValidator(req.body);
+    if(!isValid){
+      return res.status(400).json(msg);
+    }
+    
+    HomeSchema.findOne({user:req.user.userId})
+        .then(profile => {
+          console.log('current:   ' + profile);
+    
+          //根据Model 数据模型组织数据
+          const newCase = {
+            caseImg:req.body.caseImg,
+            caseTitle:req.body.caseTitle,
+            caseSubTitle:req.body.caseSubTitle,
+            caseLink:req.body.caseLink
+          };
+
+          profile.prodctCase.unshift(newCase);
           profile.save().then(profile => res.json(profile));
         })
         .catch((err) => res.json(err));
