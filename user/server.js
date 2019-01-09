@@ -9,7 +9,7 @@ const app = express();
  * process.env.PORT  意思是读取当前目录下环境变量port的值
  */
 // const port = process.env.PORT || 5000;
-const port = 3000;
+const port = 5000;
 
 /**初始化中件间
  * POST配置  给数据库添加数据中间件 bodyParser
@@ -23,7 +23,7 @@ const port = 3000;
  * extended - 当设置为false时，会使用querystring库解析URL编码的数据；
  *            当设置为true时，会使用qs库解析URL编码的数据。后没有指定编码时，使用此编码。默认为true
  */
-app.use(bodyParser.urlencoded({extended:false}))  
+app.use(bodyParser.urlencoded({extended:false})); 
 app.use(bodyParser.json());
 app.use(passport.initialize());
 

@@ -5,10 +5,9 @@ const passport = require("passport");
 const passportInfo = passport.authenticate('jwt',{ session: false });
 
 const HomeSchema = require('../../../models/AnvizHome');
-const ProfilesSchema = require('../../../models/Profiles');
 
 const homeBannerValidator = require('../../../validation/anviz/homeBanner');
-const validatorProfile = require('../../../validation/profile');
+const homeProdcutValidator = require('../../../validation/anviz/homeProdcutList');
 
 /** 
  * GET api/anviz/home/test
@@ -40,7 +39,7 @@ router.get('/banner',(req,res) => {
 /** 
  * POST api/anviz/home/banner
  * 添加 banner 数据
- * 公用
+ * 根据 token 
 */
 router.post("/banner",passportInfo,(req,res) => {
 
@@ -72,7 +71,44 @@ router.post("/banner",passportInfo,(req,res) => {
         })
       }
     })
-    .catch((err) => res.json(err));
 });
+
+/** 
+ * POST api/anviz/home/hot
+ * 添加 热销产品
+ * 根据 token 
+*/
+
+router.post('/prodcut',passportInfo,(req,res) => {
+    const {msg,isValid} = homeProdcutValidator(req.body);
+    if(!isValid){
+      return res.status(400).json(msg);
+    }
+    
+    HomeSchema.findOne({user:req.user.userId})
+        .then(profile => {
+          console.log('current:   ' + profile);
+    
+          //根据Model 数据模型组织数据
+          const newProdcut = {
+            prodctName:req.body.prodctName,
+            prodctSubTitel:req.body.prodctSubTitel,
+            prodctDes:req.body.prodctDes,
+            prodctLink:req.body.prodctLink,
+            prodctImg:req.body.prodctImg,
+            prodctFeature:req.body.prodctFeature
+          };
+
+          if(typeof req.body.prodctFeature !== "undefined"){
+            newProdcut.prodctFeature = req.body.prodctFeature.split(",");
+          }
+          
+          console.log('newProdcut:    ' + JSON.stringify(newProdcut));
+          profile.prodcutList.unshift(newProdcut);
+          console.log('profile:  ' + profile);
+          profile.save().then(profile => res.json(profile));
+        })
+        .catch((err) => res.json(err));
+    });
 
 module.exports = router;

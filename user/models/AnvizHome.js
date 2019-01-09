@@ -50,13 +50,9 @@ const HomeSchema = new Schema({
                 type:String,
                 required:true
             },
-            prodctFeature:[
-                {
-                    name:{
-                        type:String
-                    }
-                }
-            ]
+            prodctFeature:{
+                type:[String]
+            }
         }
     ],
     prodctCase:[
