@@ -21,4 +21,13 @@ localhost:3000/api/product/modules
 ## /modules/:id 更新/删除
 localhost:3000/api/product/modules/:id
 
+## Product tag
+localhost:3000/api/product/tag
+
+## /tag 查询/新增
+localhost:3000/api/product/tag
+
+## /tag/:id 更新/删除
+localhost:3000/api/product/tag/:id
+
 

@@ -37,6 +37,7 @@ app.use(require('serve-static')(__dirname + '/../../public'));
 // router
 app.use('/api/user', require('./routes/api/user'));
 app.use('/api/product', require('./routes/api/productModule'));
+app.use('/api/product', require('./routes/api/productTag'));
 
 const server = app.listen(3000, 'localhost', () => {
     const host = server.address().address
