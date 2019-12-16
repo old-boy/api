@@ -30,4 +30,13 @@ localhost:3000/api/product/tag
 ## /tag/:id 更新/删除
 localhost:3000/api/product/tag/:id
 
+## /faq 查询
+localhost:3000/api/faq/
+
+## /faq 新增
+localhost:3000/api/faq/add
+
+## /faq/:id 更新/删除
+localhost:3000/api/faq/:id
+
 
