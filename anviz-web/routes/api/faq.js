@@ -4,14 +4,11 @@ const FaqModel = require('../../models/faq/Faq');
 
 faqRouter.route('/')
     .get((req, res) => {
-        FaqModel.find().then((faq) => {
-            if (faq) {
-                res.status(200).json(faq)
-            }
-        }).catch(err => {
-            console.log(err)
+        FaqModel.find().populate("user").exec((err, doc) => {
+            console.log(doc)
         })
     });
+
 
 //add
 faqRouter.route('/add')

@@ -39,6 +39,8 @@ app.use('/api/user', require('./routes/api/user'));
 app.use('/api/product', require('./routes/api/productModule'));
 app.use('/api/product', require('./routes/api/productTag'));
 app.use('/api/faq', require('./routes/api/faq'));
+app.use('/api/product/status', require('./routes/api/sellStatus'));
+app.use('/api/product/staticpage', require('./routes/api/productTemplate'));
 
 const server = app.listen(3000, 'localhost', () => {
     const host = server.address().address

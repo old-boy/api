@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const productModule = express.Router();
-const productModel = require('../../models/product/Product');
+const productModel = require('../../models/product/Modules');
 
 
 // url/id  params.id

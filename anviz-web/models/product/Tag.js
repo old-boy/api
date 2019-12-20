@@ -14,4 +14,4 @@ const ProductTagSchema = new Schema({
     }
 });
 
-module.exports = ProductTag = mongoose.model("productTags", ProductTagSchema);
+module.exports = mongoose.model("productTags", ProductTagSchema);
