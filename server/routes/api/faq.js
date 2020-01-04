@@ -9,6 +9,13 @@ faqRouter.route('/')
         })
     });
 
+//get all
+faqRouter.route('/all')
+    .get((req, res) => {
+        FaqModel.find().then((faq) => {
+            res.send(faq)
+        }).catch(err => console.log(err))
+    })
 
 //add
 faqRouter.route('/add')
