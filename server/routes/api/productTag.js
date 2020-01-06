@@ -2,6 +2,17 @@ const express = require('express');
 const tagRouter = express.Router();
 const TagModel = require('../../models/product/Tag');
 
+
+//get id
+tagRouter.route('/tag/:id')
+    .get((req, res) => {
+        const _id = `${req.params.id}`;
+        TagModel.findById({ _id }).then(tag => {
+            res.send(tag)
+        }).catch(err => {
+            console.log(err)
+        })
+    })
 tagRouter.route('/tag')
     .get((req, res) => {
         TagModel.find().then(tag => {
@@ -24,7 +35,17 @@ tagRouter.route('/tag')
             }
         })
     })
-
+tagRouter.route("/tag/:name")
+    .get((req, res) => {
+        const tagName = `${req.params.tagName}`;
+        TagModel.findOne({ tagName }).then((tag) => {
+            if (!tag) {
+                res.status(404).json({ message: "不存在" });
+            } else {
+                res.json(tag)
+            }
+        })
+    })
 tagRouter.route("/tag/:id")
     .post((req, res) => {
         const _id = `${req.params.id}`;

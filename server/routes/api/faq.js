@@ -8,6 +8,7 @@ faqRouter.route('/')
             console.log(doc)
         })
     });
+//get id
 
 //get all
 faqRouter.route('/all')
@@ -16,13 +17,12 @@ faqRouter.route('/all')
             res.send(faq)
         }).catch(err => console.log(err))
     })
-
-//add
+    //add
 faqRouter.route('/add')
     .post((req, res) => {
         FaqModel.findOne({ faqTitle: req.body.faqTitle }).then((faq) => {
             if (faq) {
-                res.status(400).json({ message: "faq 巳存在" })
+                res.status(400).json({ message: "faq 巳存在" }).send(faq)
             } else {
                 var faqTitle = req.body.faqTitle;
                 var faqInformation = req.body.faqInformation;

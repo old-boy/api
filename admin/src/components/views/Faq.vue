@@ -10,7 +10,7 @@
                 <el-input v-model="faq.title" placeholder="faq title"></el-input>
             </el-form-item>
            <el-form-item>
-                <el-button type="primary" @click="searchFaq">Search</el-button>
+                <el-button type="primary">Search</el-button>
             </el-form-item>
             <el-form-item label="">
                 <el-button type="primary" @click="dialogVisible=true">Add</el-button>
@@ -44,19 +44,19 @@
                     fixed="right"
                     label="操作"
                     width="100">
-                    <template>
-                        <el-button type="text" size="small">删除</el-button>
-                        <el-button type="text" size="small">编辑</el-button>
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small" @click="delFaq(scope.row._id)">删除</el-button>
+                        <el-button type="text" size="small" @click="editFaq(scope.row._id)">编辑</el-button>
                     </template>
                 </el-table-column>
         </el-table>
         
         
         <el-dialog
-            title="新增Faq"
             :visible.sync="dialogVisible"
             width="30%"
             >
+           <h3 class="title">{{id ? '编辑':'新增'}}数据</h3>
             <el-form @submit.native.prevent="saveFaq">
                 <el-form-item label="">
                     <el-input v-model="productFaq.faqTitle"></el-input>
@@ -66,10 +66,7 @@
                     <el-button type="primary" native-type="submit" @click="dialogVisible=false">确定</el-button>
                 </el-form-item>
             </el-form>
-            
         </el-dialog>
-        
-
     </div>
 </template>
 <script>
@@ -80,6 +77,7 @@ export default {
     name:"Faq",
     data(){
         return {
+            id:'',
             faq:{},
             faqs:'',
             productFaq:{},
@@ -88,9 +86,6 @@ export default {
         }
     },
     methods: {
-        searchFaq(){
-
-        },
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
@@ -103,25 +98,36 @@ export default {
             })
         },
         saveFaq(){
-            this.$http.post(api.baseURL + '/faq/add', this.productFaq).then((faq) => {
-                if(faq.faqTitle || faq.status == 400){
-                    this.$message({
-                        type:"warning",
-                        message:"数据巳存在"
-                    })
-                    return false;
-                }else{
-                    this.$message({
-                        type:"success",
-                        message:"新增成功"
-                    })
-                }
-            })
+            if(this.id){
+                this.$http.post(api.baseURL + `/faq/${this.id}`, this.productFaq)
+                this.$message({
+                    type:"success",
+                    message:"更新成功"
+                })
+            }else{
+                this.$http.post(api.baseURL + `/faq/add`, this.productFaq);
+                this.$message({
+                    type:"success",
+                    message:"新增成功"
+                })
+            }
         },
-        getFaq(){
+        async getFaq(){
             this.$http.get(api.baseURL + "/faq/all").then((res) => {
                 this.faqs = res.data;
             }).catch(err => alert(err))
+        },
+        delFaq(row){
+            this.$http.delete(api.baseURL + `/faq/${row}`);
+            this.$message({
+                type:"success",
+                message:"删除成功"
+            });
+            this.getTags();
+        },
+        editFaq(row){
+            this.id = row;
+            this.dialogVisible = true;
         }
     },
     created() {
