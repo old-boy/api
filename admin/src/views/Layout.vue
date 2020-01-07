@@ -14,8 +14,11 @@
 </template>
 <style lang="scss">
   .main{
+      height: 100vh;
+      min-height: 100vh;
+
       .box{
-          height: 100vh;
+          height: 100%;
           border: 1px solid #eee
       }
       .content{

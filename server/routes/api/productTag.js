@@ -16,7 +16,7 @@ tagRouter.route('/tag/:id')
 tagRouter.route('/tag')
     .get((req, res) => {
         TagModel.find().then(tag => {
-            res.json(tag)
+            res.send(tag)
         }).catch(err => {
             console.log(err)
         })
@@ -31,7 +31,7 @@ tagRouter.route('/tag')
                     tagName
                 });
 
-                newTag.save().then(tag => res.json(tag)).catch(err => console.log(err));
+                newTag.save().then(tag => res.send(tag)).catch(err => console.log(err));
             }
         })
     })
@@ -53,7 +53,7 @@ tagRouter.route("/tag/:id")
             if (err) {
                 res.status(500).json({ error: err });
             } else {
-                res.status(200).json({ message: "更新成功" })
+                res.status(200).send(tag);
             }
         })
     })
@@ -63,7 +63,7 @@ tagRouter.route("/tag/:id")
             if (!id) {
                 res.status(400).json({ message: "id不存在" })
             } else {
-                TagModel.deleteOne({ _id }).then(tag => res.status(200).json({ message: "删除成功" }));
+                TagModel.findByIdAndDelete({ _id }).then(tag => res.status(200).json({ message: "删除成功" }));
             }
         })
     })

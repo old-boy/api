@@ -19,7 +19,6 @@
 
         <el-table 
             :data="faqs" 
-            class="table"
             border 
             stripe
             tooltip-effect="dark"
@@ -31,7 +30,8 @@
                 </el-table-column>
                 <el-table-column
                     prop="_id"
-                    label="id">
+                    label="id"
+                    width="300">
                     <template slot-scope="scope">{{ scope.row._id }}</template>
                 </el-table-column>
                 <el-table-column
@@ -58,8 +58,22 @@
             >
            <h3 class="title">{{id ? '编辑':'新增'}}数据</h3>
             <el-form @submit.native.prevent="saveFaq">
-                <el-form-item label="">
+                
+                <el-form-item label="Selete Tag">
+                    <el-select v-model="value" placeholder="Selete Tag">
+                        <el-option v-for="item in tags"
+                            :key="item._id"
+                            :label="item.tagName"
+                            :value="item._id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                
+                <el-form-item label="FAQ Title">
                     <el-input v-model="productFaq.faqTitle"></el-input>
+                </el-form-item>
+                <el-form-item label="FAQ Details">
+                    <el-input type="textarea" v-model="productFaq.faqInformation"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button @click="dialogVisible=false">取消</el-button>
@@ -79,6 +93,8 @@ export default {
         return {
             id:'',
             faq:{},
+            tags:'',
+            value:'',
             faqs:'',
             productFaq:{},
             multipleSelection:[],
@@ -98,18 +114,25 @@ export default {
             })
         },
         saveFaq(){
+            
             if(this.id){
-                this.$http.post(api.baseURL + `/faq/${this.id}`, this.productFaq)
-                this.$message({
-                    type:"success",
-                    message:"更新成功"
-                })
+                this.$http.post(api.baseURL + `/faq/${this.id}`, this.productFaq).then((res) => {
+                    this.faqs = res.data;
+                    this.$message({
+                        type:"success",
+                        message:"更新成功"
+                    })
+                    this.getFaq();
+                });
             }else{
-                this.$http.post(api.baseURL + `/faq/add`, this.productFaq);
-                this.$message({
-                    type:"success",
-                    message:"新增成功"
-                })
+                this.$http.post(api.baseURL + `/faq/add`, this.productFaq).then((res) => {
+                    this.faqs = res.data;
+                    this.$message({
+                        type:"success",
+                        message:"新增成功"
+                    });
+                    this.getFaq();
+                });
             }
         },
         async getFaq(){
@@ -117,13 +140,19 @@ export default {
                 this.faqs = res.data;
             }).catch(err => alert(err))
         },
+        async getTags(){
+            const res = await this.$http.get(api.baseURL + "/product/tag");
+            this.tags = res.data;
+            // alert(JSON.stringify(this.tags))
+        },
         delFaq(row){
-            this.$http.delete(api.baseURL + `/faq/${row}`);
-            this.$message({
-                type:"success",
-                message:"删除成功"
+            this.$http.delete(api.baseURL + `/faq/${row}`).then(() => {
+                this.$message({
+                    type:"success",
+                    message:"删除成功"
+                });
+                this.getFaq();
             });
-            this.getTags();
         },
         editFaq(row){
             this.id = row;
@@ -131,7 +160,8 @@ export default {
         }
     },
     created() {
-        this.getFaq()
+        this.getFaq();
+        this.getTags();
     },
 }
 </script>

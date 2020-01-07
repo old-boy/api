@@ -87,6 +87,9 @@ export default {
     created() {
         this.getTags()
     },
+    // activated() {
+    //     this.getTags()
+    // },
     methods: {
         handleClose(done) {
             this.$confirm('确认关闭？')
@@ -97,19 +100,25 @@ export default {
         },
         saveTag(){
             if(this.id){
-                this.$http.post(api.baseURL + `/product/tag/${this.id}`,this.productTags);
-                this.$message({
-                    type:"success",
-                    message:"更新成功"
-                })
+                this.$http.post(api.baseURL + `/product/tag/${this.id}`,this.productTags).then((res) => {
+                    this.tags = res.data;
+                    this.$message({
+                        type:"success",
+                        message:"更新成功"
+                    });
+                    this.getTags();
+                });
+                
             }else{
-                this.$http.post(api.baseURL + `/product/tag`,this.productTags);
-                this.$message({
-                    type:"success",
-                    message:"新增成功"
-                })
+                this.$http.post(api.baseURL + `/product/tag`,this.productTags).then((res) => {
+                    this.tags = res.data;
+                    this.$message({
+                        type:"success",
+                        message:"新增成功"
+                    });
+                    this.getTags();
+                });
             }
-            
         },
         getTags(){
             this.$http.get(api.baseURL + "/product/tag").then((res) =>{
@@ -120,12 +129,14 @@ export default {
             this.multipleSelection = val;
         },
         handleDeleteClick(index,row){
-            this.$http.delete(api.baseURL + `/product/tag/${row}`);
-            this.$message({
-                type:"success",
-                message:"删除成功"
+            this.$http.delete(api.baseURL + `/product/tag/${row}`).then(() => {
+                this.$message({
+                    type:"success",
+                    message:"删除成功"
+                });
+                this.getTags();
             });
-            this.getTags();
+            
         },
         handleEditClick(row){
             this.id = row;

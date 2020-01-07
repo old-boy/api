@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const faqSchema = new Schema({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
-    },
     faqTitle: {
         type: String,
         required: true
     },
     faqInformation: {
         type: String
+    },
+    tags: {
+        type: Schema.Types.ObjectId,
+        ref: 'productTags'
     },
     pubDate: {
         type: Date,
