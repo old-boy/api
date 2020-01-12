@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './plugins/element.js'
+import './plugins/codeEdit.js'
 import axios from 'axios';
 import router from './router'
 import './assets/scss/anviz.min.css'

@@ -67,5 +67,11 @@ tagRouter.route("/tag/:id")
             }
         })
     })
+    //带参数
+    .get(async(req, res) => {
+        const _id = `${req.params.id}`;
+        const productTags = await TagModel.findById({ _id })
+        res.send(productTags)
+    })
 
 module.exports = tagRouter;

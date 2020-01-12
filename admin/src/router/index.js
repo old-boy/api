@@ -4,6 +4,8 @@ import Layout from '../views/Layout.vue'
 import Login from '../views/Login.vue'
 import Tag from '../components/views/Tag.vue'
 import Faq from '../components/views/Faq.vue'
+import StaticPage from '../components/views/StaticPage.vue'
+import StaticDetails from '../components/views/StaticDatials.vue'
 import Dashboard from '../views/Dashboard.vue'
 
 Vue.use(VueRouter)
@@ -16,7 +18,9 @@ const routes = [{
     children: [
         { path: "/dashboard", component: Dashboard },
         { path: "/product/tag", component: Tag },
-        { path: "/product/faq", component: Faq }
+        { path: "/product/faq", component: Faq },
+        { path: "/product/staticPage", component: StaticPage },
+        { path: "/product/staticPage/details", component: StaticDetails }
     ]
 }, {
     path: '/login',

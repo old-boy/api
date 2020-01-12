@@ -19,5 +19,8 @@ module.exports = [{
     }, {
         name: 'Faq',
         componentName: "/product/faq"
+    }, {
+        name: "Static Page",
+        componentName: "/product/staticPage"
     }]
 }]

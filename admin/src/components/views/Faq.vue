@@ -25,30 +25,30 @@
             style="width: 100%"
             @selection-change="handleSelectionChange">
             <el-table-column
-                    type="selection"
-                    width="55">
-                </el-table-column>
-                <el-table-column
-                    prop="_id"
-                    label="id"
-                    width="300">
-                    <template slot-scope="scope">{{ scope.row._id }}</template>
-                </el-table-column>
-                <el-table-column
-                    label="faq Title">
-                    <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="link(scope.row)">{{scope.row.faqTitle}}</el-button>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    fixed="right"
-                    label="操作"
-                    width="100">
-                    <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="delFaq(scope.row._id)">删除</el-button>
-                        <el-button type="text" size="small" @click="editFaq(scope.row._id)">编辑</el-button>
-                    </template>
-                </el-table-column>
+                type="selection"
+                width="55">
+            </el-table-column>
+            <el-table-column
+                prop="_id"
+                label="id"
+                width="300">
+                <template slot-scope="scope">{{ scope.row._id }}</template>
+            </el-table-column>
+            <el-table-column
+                label="faq Title">
+                <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="link(scope.row)">{{scope.row.faqTitle}}</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column
+                fixed="right"
+                label="操作"
+                width="100">
+                <template slot-scope="scope">
+                    <el-button type="text" size="small" @click="delFaq(scope.row._id)">删除</el-button>
+                    <el-button type="text" size="small" @click="editFaq(scope.row._id)">编辑</el-button>
+                </template>
+            </el-table-column>
         </el-table>
         
         
@@ -95,7 +95,7 @@ export default {
             faq:{},
             tags:'',
             value:'',
-            faqs:'',
+            faqs:[],
             productFaq:{},
             multipleSelection:[],
             dialogVisible:false
@@ -113,8 +113,11 @@ export default {
                 }
             })
         },
+        editFaq(row){
+            this.id = row;
+            this.dialogVisible = true;
+        },
         saveFaq(){
-            
             if(this.id){
                 this.$http.post(api.baseURL + `/faq/${this.id}`, this.productFaq).then((res) => {
                     this.faqs = res.data;
@@ -123,6 +126,7 @@ export default {
                         message:"更新成功"
                     })
                     this.getFaq();
+                    this.id = '';
                 });
             }else{
                 this.$http.post(api.baseURL + `/faq/add`, this.productFaq).then((res) => {
@@ -154,10 +158,7 @@ export default {
                 this.getFaq();
             });
         },
-        editFaq(row){
-            this.id = row;
-            this.dialogVisible = true;
-        }
+        
     },
     created() {
         this.getFaq();

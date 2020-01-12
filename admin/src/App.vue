@@ -22,5 +22,14 @@ html,body{
   .text-left{
     text-align: left;
   }
+  pre{
+    white-space: pre-wrap;
+  }
+  textarea{
+    min-height: 80vh;
+    &.el-textarea__inner{
+      border: none;
+    }
+  }
 }
 </style>

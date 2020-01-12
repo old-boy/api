@@ -1,9 +1,15 @@
 @charset 'utf-8';
 .tag,
-.faq {
+.faq,
+.static-page,
+.details {
     width: calc(100% - 40px);
     height: 100%;
     padding: 15px;
+    border: 0;
+    max-height: 90vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .search-left {
@@ -20,4 +26,18 @@
     span {
         font-size: 14px;
     }
+}
+
+.text-center {
+    width: 100%;
+    text-align: center;
+}
+
+.border-block {
+    width: 100%;
+    text-align: left;
+    padding: 24px;
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    transition: .2s;
 }

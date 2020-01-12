@@ -30,7 +30,8 @@
                 </el-table-column>
                 <el-table-column
                     prop="_id"
-                    label="id">
+                    label="id"
+                    width="300">
                     <template slot-scope="scope">{{ scope.row._id }}</template>
                 </el-table-column>
                 <el-table-column
@@ -85,7 +86,8 @@ export default {
         }
     },
     created() {
-        this.getTags()
+        this.getTags();
+        this.id && this.bindValue();
     },
     // activated() {
     //     this.getTags()
@@ -100,6 +102,8 @@ export default {
         },
         saveTag(){
             if(this.id){
+                // const res = this.$http.get(api.baseURL + `/product/tag/${this.id}`);
+                // this.tags = res.data;
                 this.$http.post(api.baseURL + `/product/tag/${this.id}`,this.productTags).then((res) => {
                     this.tags = res.data;
                     this.$message({
@@ -119,6 +123,10 @@ export default {
                     this.getTags();
                 });
             }
+        },
+        async bindValue(){
+            const res = this.$http.get(api.baseURL + `/product/tag/${this.id}`)
+            this.tags = res.data;
         },
         getTags(){
             this.$http.get(api.baseURL + "/product/tag").then((res) =>{

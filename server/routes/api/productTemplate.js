@@ -6,9 +6,9 @@ templateRouter.route("/")
     .get((req, res) => {
         templateModel.find().then(template => {
             if (template.length == 0) {
-                res.json({ message: "暂时没有添加数据" })
+                res.status(200).json({ message: "暂时没有添加数据" })
             } else {
-                res.status(200).json(template)
+                res.status(200).send(template)
             }
         }).catch(err => console.log(err))
     })
@@ -29,12 +29,18 @@ templateRouter.route("/add")
                     code
                 });
 
-                newTemplate.save().then(template => res.json(template)).catch(err => console.log(err))
+                newTemplate.save().then(template => res.send(template)).catch(err => console.log(err))
             }
         })
     })
 
 templateRouter.route("/:id")
+    .get((req, res) => {
+        var _id = `${req.params.id}`;
+        templateModel.findById({ _id }).then(template => {
+            res.status(200).send(template)
+        }).catch(err => console.log(err))
+    })
     .post((req, res) => {
         var _id = `${req.params.id}`;
         templateModel.findByIdAndUpdate({ _id }, req.body, (err, template) => {
@@ -51,7 +57,7 @@ templateRouter.route("/:id")
             if (!data) {
                 res.status(400).json({ message: "数据不存在" })
             } else {
-                templateModel.deleteOne({ _id }).then(data => res.status(200).json({ message: "删除成功" })).catch(err => console.log(err))
+                templateModel.deleteOne({ _id }).then(data => res.status(200).send({ message: true })).catch(err => console.log(err))
             }
         })
     })

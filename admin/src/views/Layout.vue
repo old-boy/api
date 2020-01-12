@@ -19,7 +19,7 @@
 
       .box{
           height: 100%;
-          border: 1px solid #eee
+        //   border: 1px solid #eee
       }
       .content{
           display: flex;
