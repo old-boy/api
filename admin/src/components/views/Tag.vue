@@ -23,7 +23,8 @@
                 stripe
                 tooltip-effect="dark"
                 style="width: 100%"
-                @selection-change="handleSelectionChange">
+                @selection-change="handleSelectionChange"
+                v-if="this.tags">
                 <el-table-column
                     type="selection"
                     width="55">
@@ -32,7 +33,7 @@
                     prop="_id"
                     label="id"
                     width="300">
-                    <template slot-scope="scope">{{ scope.row._id }}</template>
+                    <template slot-scope="scope" current-row-key="_id">{{ scope.row._id }}</template>
                 </el-table-column>
                 <el-table-column
                     prop="tagName"
@@ -102,10 +103,14 @@ export default {
         },
         saveTag(){
             if(this.id){
-                // const res = this.$http.get(api.baseURL + `/product/tag/${this.id}`);
-                // this.tags = res.data;
                 this.$http.post(api.baseURL + `/product/tag/${this.id}`,this.productTags).then((res) => {
-                    this.tags = res.data;
+                    if(res.Status == 400){
+                        this.$message({
+                            type:"warning",
+                            message:"巳存在"
+                        });
+                    }
+                    this.setArr(res);
                     this.$message({
                         type:"success",
                         message:"更新成功"
@@ -115,12 +120,14 @@ export default {
                 
             }else{
                 this.$http.post(api.baseURL + `/product/tag`,this.productTags).then((res) => {
-                    this.tags = res.data;
+                    // window.console.log(res.data)
+                    this.setArr(res);
                     this.$message({
                         type:"success",
                         message:"新增成功"
                     });
                     this.getTags();
+
                 });
             }
         },
@@ -130,8 +137,15 @@ export default {
         },
         getTags(){
             this.$http.get(api.baseURL + "/product/tag").then((res) =>{
+                
                 this.tags = res.data;
+                window.console.log(this.tags)
             }).catch(err => alert(err))
+        },
+        setArr(option){
+            const arr = [];
+            arr.push(option.data);
+            this.tags = arr;
         },
         handleSelectionChange(val) {
             this.multipleSelection = val;

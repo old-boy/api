@@ -65,7 +65,12 @@ export default {
             });
 
             this.getUrlOption()
-        }
+        },
+        setArr(option){
+            const arr = [];
+            arr.push(option.data);
+            this.tags = arr;
+        },
     },
     created() {
         this.getUrlOption()

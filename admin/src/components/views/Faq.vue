@@ -120,7 +120,7 @@ export default {
         saveFaq(){
             if(this.id){
                 this.$http.post(api.baseURL + `/faq/${this.id}`, this.productFaq).then((res) => {
-                    this.faqs = res.data;
+                    this.setArr(res);
                     this.$message({
                         type:"success",
                         message:"更新成功"
@@ -130,7 +130,7 @@ export default {
                 });
             }else{
                 this.$http.post(api.baseURL + `/faq/add`, this.productFaq).then((res) => {
-                    this.faqs = res.data;
+                    this.setArr(res);
                     this.$message({
                         type:"success",
                         message:"新增成功"
@@ -148,6 +148,11 @@ export default {
             const res = await this.$http.get(api.baseURL + "/product/tag");
             this.tags = res.data;
             // alert(JSON.stringify(this.tags))
+        },
+        setArr(option){
+            const arr = [];
+            arr.push(option.data);
+            this.tags = arr;
         },
         delFaq(row){
             this.$http.delete(api.baseURL + `/faq/${row}`).then(() => {

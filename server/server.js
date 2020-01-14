@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
-
+const cors = require('cors');
 
 const app = express();
 
@@ -32,6 +32,7 @@ app.use(session({
         collection: 'sessions'
     })
 }));
+app.use(cors());
 app.use(require('serve-static')(__dirname + '/../../public'));
 
 // router
@@ -43,7 +44,7 @@ app.use('/api/faq', require('./routes/api/faq'));
 app.use('/api/product/status', require('./routes/api/sellStatus'));
 app.use('/api/product/staticpage', require('./routes/api/productTemplate'));
 
-const server = app.listen(3000, 'localhost', () => {
+const server = app.listen(port, 'localhost', () => {
     const host = server.address().address
     const port = server.address().port
     console.log("server started! 访问地址为 http://%s:%s", host, port)

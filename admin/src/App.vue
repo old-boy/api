@@ -28,7 +28,7 @@ html,body{
   textarea{
     min-height: 80vh;
     &.el-textarea__inner{
-      border: none;
+      // border: none;
     }
   }
 }

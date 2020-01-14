@@ -116,7 +116,7 @@ export default {
         saveStatic(){
             if(this.id){
                 this.$http.post(api.baseURL + `/product/staticpage/${this.id}`, this.productStatic).then((res) => {
-                    this.staticArr = res.data;
+                    this.setArr(res);
                     // this.id = "";
                     this.$message({
                         type:"success",
@@ -126,7 +126,7 @@ export default {
                 });
             }else{
                 this.$http.post(api.baseURL + "/product/staticpage/add", this.productStatic).then((res) => {
-                    this.staticArr = res.data;
+                    this.setArr(res);
                     this.$message({
                         type:"success",
                         message:"新增成功"
@@ -135,6 +135,11 @@ export default {
                 });
             }
             
+        },
+        setArr(option){
+            const arr = [];
+            arr.push(option.data);
+            this.tags = arr;
         },
         link(item){
             this.$router.push({
