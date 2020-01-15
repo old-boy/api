@@ -11,8 +11,8 @@ const productModuleModel = require('../../models/product/Modules');
 productModuleRouter.route('/modules')
     // get
     .get((req, res) => {
-        productModuleModel.find().then(module => {
-            res.json(module);
+        productModuleModel.find().then((module) => {
+            res.send(module);
         }).catch(err => {
             res.status(500).json({ message: err.message })
         });
@@ -31,7 +31,7 @@ productModuleRouter.route('/modules')
                     moduleClassName
                 });
 
-                newModule.save().then(module => res.json(module)).catch(err => console.log(err));
+                newModule.save().then(module => res.send(module)).catch(err => console.log(err));
             }
         })
     })
@@ -39,6 +39,13 @@ productModuleRouter.route('/modules')
 
 
 productModuleRouter.route('/modules/:id')
+    //get id
+    .get((req,res) => {
+        const _id = `${req.params.id}`;
+        productModuleModel.findById({_id}).then((module) => {
+            res.send(module)
+        }).catch(err => console.log(err))
+    })
     // update
     .post((req, res) => {
         const _id = `${req.params.id}`;
@@ -48,22 +55,19 @@ productModuleRouter.route('/modules/:id')
             if (err) {
                 res.status(500).json({ error: err });
             } else {
-                res.status(200).json(module)
+                res.status(200).send(module)
             }
         })
     })
     // delete
     .delete((req, res) => {
-        var id = `${req.params.id}`;
-        console.log(id)
-        productModuleModel.findById({ _id: id }).then((id) => {
-            if (id) {
-                productModuleModel.deleteOne({ _id: id }).then(module => res.status(200).json(module));
+        const _id = `${req.params.id}`;
+        productModuleModel.findById({ _id }).then((id) => {
+            if (!id) {
+                res.status(400).json({ message: "id不存在" })
             } else {
-                return res.status(400).json({ "_id": "id不存在" })
+                productModuleModel.findByIdAndDelete({ _id }).then(tag => res.status(200).json({ message: "删除成功" }));
             }
-        }).catch(err => {
-            console.log(err)
         })
     })
 

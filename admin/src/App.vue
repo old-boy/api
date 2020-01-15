@@ -25,11 +25,8 @@ html,body{
   pre{
     white-space: pre-wrap;
   }
-  textarea{
-    min-height: 80vh;
-    &.el-textarea__inner{
-      // border: none;
-    }
+  .el-select{
+    width: 100%;
   }
 }
 </style>

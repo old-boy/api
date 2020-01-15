@@ -5,6 +5,7 @@ import './plugins/codeEdit.js'
 import axios from 'axios';
 import router from './router'
 import './assets/scss/anviz.min.css'
+import './assets/iconfont/device-font.css'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios

@@ -141,7 +141,7 @@ export default {
         },
         async getFaq(){
             this.$http.get(api.baseURL + "/faq/all").then((res) => {
-                this.faqs = res.data;
+                this.setArr(res);
             }).catch(err => alert(err))
         },
         async getTags(){

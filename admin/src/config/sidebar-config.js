@@ -22,5 +22,8 @@ module.exports = [{
     }, {
         name: "Static Page",
         componentName: "/product/staticPage"
+    },{
+        name:"Modules",
+        componentName:"/product/modules"
     }]
 }]

@@ -1,0 +1,324 @@
+@font-face {
+    font-family: 'device';
+    src:  url('./device-fonts/device.eot?diad2t');
+    src:  url('./device-fonts/device.eot?diad2t#iefix') format('embedded-opentype'),
+      url('./device-fonts/device.ttf?diad2t') format('truetype'),
+      url('./device-fonts/device.woff?diad2t') format('woff'),
+      url('./device-fonts/device.svg?diad2t#device') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  [class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'device' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-anti-pass-back:before {
+    font-family: 'device' !important;
+    content: "\e948";
+  }
+  .icon-iris-usb:before {
+    font-family: 'device' !important;
+    content: "\e913";
+  }
+  .icon-hdmi:before {
+    font-family: 'device' !important;
+    content: "\e915";
+  }
+  .icon-smart-led:before {
+    font-family: 'device' !important;
+    content: "\e916";
+  }
+  .icon-poe:before {
+    font-family: 'device' !important;
+    content: "\e919";
+  }
+  .icon-webserver:before {
+    font-family: 'device' !important;
+    content: "\e91b";
+  }
+  .icon-language:before {
+    font-family: 'device' !important;
+    content: "\e931";
+  }
+  .icon-smart-ir:before {
+    font-family: 'device' !important;
+    content: "\e932";
+  }
+  .icon-zig-bee:before {
+    font-family: 'device' !important;
+    content: "\e937";
+  }
+  .icon-wiegand1:before {
+    font-family: 'device' !important;
+    content: "\e938";
+  }
+  .icon-low-lux:before {
+    font-family: 'device' !important;
+    content: "\e939";
+  }
+  .icon-dual-display:before {
+    font-family: 'device' !important;
+    content: "\e941";
+  }
+  .icon-cpu:before {
+    font-family: 'device' !important;
+    content: "\e947";
+  }
+  .icon-record-capacity:before {
+    font-family: 'device' !important;
+    content: "\e93d";
+  }
+  .icon-database:before {
+    font-family: 'device' !important;
+    content: "\e93e";
+  }
+  .icon-door:before {
+    font-family: 'device' !important;
+    content: "\e93f";
+  }
+  .icon-wifi-battery:before {
+    font-family: 'device' !important;
+    content: "\e940";
+  }
+  .icon-message:before {
+    font-family: 'device' !important;
+    content: "\e942";
+  }
+  .icon-email:before {
+    font-family: 'device' !important;
+    content: "\e943";
+  }
+  .icon-atx:before {
+    font-family: 'device' !important;
+    content: "\e944";
+  }
+  .icon-ram:before {
+    font-family: 'device' !important;
+    content: "\e945";
+  }
+  .icon-facial:before {
+    font-family: 'device' !important;
+    content: "\e946";
+  }
+  .icon-full-hd:before {
+    font-family: 'device' !important;
+    content: "\e900";
+  }
+  .icon-less-than-half-second:before {
+    font-family: 'device' !important;
+    content: "\e901";
+  }
+  .icon-camera:before {
+    font-family: 'device' !important;
+    content: "\e902";
+  }
+  .icon-bluetooth:before {
+    font-family: 'device' !important;
+    content: "\e903";
+  }
+  .icon-lcd_screen:before {
+    font-family: 'device' !important;
+    content: "\e904";
+  }
+  .icon-ik10:before {
+    font-family: 'device' !important;
+    content: "\e905";
+  }
+  .icon-voice:before {
+    font-family: 'device' !important;
+    content: "\e906";
+  }
+  .icon-durl-camera:before {
+    font-family: 'device' !important;
+    content: "\e907";
+  }
+  .icon-card:before {
+    font-family: 'device' !important;
+    content: "\e909";
+  }
+  .icon-touch-screen:before {
+    font-family: 'device' !important;
+    content: "\e90a";
+  }
+  .icon-cloud:before {
+    font-family: 'device' !important;
+    content: "\e90b";
+  }
+  .icon-lunix:before {
+    font-family: 'device' !important;
+    content: "\e90c";
+  }
+  .icon-web-browser:before {
+    font-family: 'device' !important;
+    content: "\e90d";
+  }
+  .icon-crosschex:before {
+    font-family: 'device' !important;
+    content: "\e90e";
+  }
+  .icon-gprs:before {
+    font-family: 'device' !important;
+    content: "\e90f";
+  }
+  .icon-usb:before {
+    font-family: 'device' !important;
+    content: "\e910";
+  }
+  .icon-rs485:before {
+    font-family: 'device' !important;
+    content: "\e911";
+  }
+  .icon-access_contro:before {
+    font-family: 'device' !important;
+    content: "\e912";
+  }
+  .icon-touch-keypad:before {
+    font-family: 'device' !important;
+    content: "\e914";
+  }
+  .icon-print:before {
+    font-family: 'device' !important;
+    content: "\e917";
+  }
+  .icon-touch:before {
+    font-family: 'device' !important;
+    content: "\e918";
+  }
+  .icon-ip65:before {
+    font-family: 'device' !important;
+    content: "\e91a";
+  }
+  .icon-iris:before {
+    font-family: 'device' !important;
+    content: "\e91c";
+  }
+  .icon-key:before {
+    font-family: 'device' !important;
+    content: "\e91d";
+  }
+  .icon-doorbell:before {
+    font-family: 'device' !important;
+    content: "\e91e";
+  }
+  .icon-battery:before {
+    font-family: 'device' !important;
+    content: "\e91f";
+  }
+  .icon-audio:before {
+    font-family: 'device' !important;
+    content: "\e920";
+  }
+  .icon-oled:before {
+    font-family: 'device' !important;
+    content: "\e921";
+  }
+  .icon-daylight-saving:before {
+    font-family: 'device' !important;
+    content: "\e922";
+  }
+  .icon-ptz:before {
+    font-family: 'device' !important;
+    content: "\e923";
+  }
+  .icon-large-angle:before {
+    font-family: 'device' !important;
+    content: "\e924";
+  }
+  .icon-record-search:before {
+    font-family: 'device' !important;
+    content: "\e925";
+  }
+  .icon-alarm:before {
+    font-family: 'device' !important;
+    content: "\e926";
+  }
+  .icon-door-sensor:before {
+    font-family: 'device' !important;
+    content: "\e927";
+  }
+  .icon-relay:before {
+    font-family: 'device' !important;
+    content: "\e928";
+  }
+  .icon-infrared:before {
+    font-family: 'device' !important;
+    content: "\e929";
+  }
+  .icon-a-control:before {
+    font-family: 'device' !important;
+    content: "\e92a";
+  }
+  .icon-corridor-fomat:before {
+    font-family: 'device' !important;
+    content: "\e92b";
+  }
+  .icon-wifi:before {
+    font-family: 'device' !important;
+    content: "\e92c";
+  }
+  .icon-more-in-or-out:before {
+    content: "\e92d";
+    font-family: 'device' !important;
+  }
+  .icon-h264-jpeg:before {
+    font-family: 'device' !important;
+    content: "\e92e";
+  }
+  .icon-micro-SD:before {
+    font-family: 'device' !important;
+    content: "\e92f";
+  }
+  .icon-ip66:before {
+    font-family: 'device' !important;
+    content: "\e930";
+  }
+  .icon-WDR:before {
+    font-family: 'device' !important;
+    content: "\e933";
+  }
+  .icon-wiegand:before {
+    font-family: 'device' !important;
+    content: "\e934";
+  }
+  .icon-onvif:before {
+    font-family: 'device' !important;
+    content: "\e935";
+  }
+  .icon-motion-detection:before {
+    font-family: 'device' !important;
+    content: "\e936";
+  }
+  .icon-fingerprint:before {
+    font-family: 'device' !important;
+    content: "\e93a";
+  }
+  .icon-afos:before {
+    font-family: 'device' !important;
+    content: "\e93b";
+  }
+  .icon-ip:before {
+    font-family: 'device' !important;
+    content: "\e93c";
+  }
+  .icon-card-read:before {
+    font-family: 'device' !important;
+    content: "\e908";
+  }
+  .icon-h265-jpeg:before {
+    font-family: 'device' !important;
+    content: "\e949";
+  }
+  
